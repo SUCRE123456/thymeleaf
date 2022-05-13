@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+	crossorigin="anonymous">
+	<style>
+		.odd {background-color: #eeeeee;}
+	</style>
+</head>
+<body>
+<a href="/insertFormEmp">사원등록</a>
+<table class="table">
+<thead> 
+  <tr>
+    <th>no</th>
+    <th>employee_id</th>
+    <th>name</th>
+    <th>hireDate</th>
+    <th>jobId</th>
+    <th>email</th>
+    <th>managerId</th>    
+    <th>departmentId</th>
+     <th>salary</th>    
+  </tr>
+</thead>
+<tbody>  
+   <tr th:each="emp : ${empList}" th:class="${empStat.odd}? 'odd'">
+   <!-- <tr th:each="emp, iterstat : ${empList}" th:class="${iterstat.odd}? 'odd'">//안됨.  -->
+    <td th:text="${empStat.count}">1</td>
+    <td th:text="${emp.employeeId}">100</td>
+    <td><a href="#" th:href="@{updateFormEmp(employeeId=${emp.employeeId})}" th:text="|${emp.firstName} ${emp.lastName}|">steven king</a></td>
+    <td th:text="${emp.hireDate}">2021-01-03</td>
+    <td th:text="${emp.jobId}">IT_PROG</td>
+    <td th:text="${emp.email}">abc@a.com</td>
+    <td><span th:text="${emp.managerId}">170</span> 
+        <a href="#" 
+           th:href="@{/getEmp/{id}(id=${emp.managerId})}" 
+           th:unless="${#strings.isEmpty(emp.managerId)}">매니저조회</a></td>
+           <!-- th:if="${not #strings.isEmpty(emp.managerId)}">메니저조회</a></td> -->
+
+    <td th:text="${emp.departmentId}">10</td>
+    <td th:text="${emp.salary}">3000</td>
+  </tr>
+</tbody>  
+</table>
+
+</body>
+</html>
